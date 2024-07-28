@@ -9,6 +9,10 @@ class Expense ():
         self.money = money
         self.category = category
         self.comment = comment
+    def toDict (self):
+        dict = {"money": str(self.money), "category": self.category, "comment": self.comment}
+        print("Initialized")
+        return dict
     def getMoney(self):
         return self.money
     def getCategory(self):

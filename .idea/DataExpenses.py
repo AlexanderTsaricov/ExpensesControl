@@ -1,29 +1,22 @@
 import json
 import pickle
+from Expense import Expense
 
 class Data ():
-    list = []
+    listData = []
+    count = 0
     def __init__(self):
-        try:
-            with open("expenses.json", "rb") as file:
-                jsonTemp = pickle.load(file)
-                # Не загружается из файла
-                temp = json.loads(jsonTemp, object_hook=lambda d: namedtuple('X', d.keys())(*d.values()))
-                self.list = temp.list
-                print("Данные загружены из файла")
-        except:
-            print("Данные не найдены, создаем новый список затрат")
-
+        pass
     def addExpense(self, x):
-        self.list.append(x)
-    def save(self):
-        with open("expenses.json", "wb") as file:
-            jsonString = json.dumps(self.__dict__)
-            pickle.dump(jsonString, file)
-def toDict(exp):
-    return {"money":exp.money, "category":exp.category, "comment":exp.comment}
-def toExpense(dicts):
-    res = []
-    for i in dicts:
-        res.append(Expense(i["money"], i["category"], i["comment"]))
-    return res
+        self.listData.append(x)
+        self.count += 1
+    def toDict(self):
+        tempList = []
+        for x in self.listData:
+            tempList.append(x.toDict())
+        self.listData = tempList
+    def toExpense(self):
+        tempList = []
+        for i in self.listData:
+            tempList.append(Expense(i["money"], i["category"], i["comment"]))
+        self.listData = tempList

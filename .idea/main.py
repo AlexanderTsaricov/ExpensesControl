@@ -16,12 +16,14 @@ from kivy.lang import Builder
 from kivy.uix.textinput import TextInput
 from kivy.uix.widget import Widget
 import DataExpenses
+import Saved
 
-# Проверка на правильность загрузки данных
-exp = DataExpenses.Data()
-print(len(exp.list))
-for i in exp.list:
-    print(i.toPrint())
+
+
+
+exp = Saved.load()
+
+print(exp.listData)
 class MyRoot(Screen, BoxLayout):
     def minus(self):
         return AddRoot()
@@ -50,9 +52,11 @@ class AddRoot(Screen, BoxLayout):
         self.money = int(self.money)
         tempExp = Ex.Expense(self.money, self.category, self.comment)
         exp.addExpense(tempExp)
-        for i in exp.list:
+        for i in exp.listData:
             print(i.toPrint())
-        exp.save()
+        exp.toDict()
+        Saved.save(exp)
+        exp.toExpense()
 
 class textinp(Widget):
     pass
